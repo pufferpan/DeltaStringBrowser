@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 浅色 / 深色由应用内主题模式（跟随系统/浅色/深色）控制：
+         此处只负责 Compose 绘制前的窗口底色与系统栏图标；深色值见 values-night。 -->
+    <style name="Theme.StringTables" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/surface</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">@bool/window_light_system_bars</item>
+        <item name="android:windowLightNavigationBar">@bool/window_light_system_bars</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:colorAccent">@color/primary</item>
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+</resources>

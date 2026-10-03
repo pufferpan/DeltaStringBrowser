@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material 3 Blue 浅色方案（与代码中 lightColorScheme 同步；此处只用于系统窗口/启动背景） -->
+    <color name="primary">#0B57D0</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="surface">#FAF9FD</color>
+    <color name="surface_container">#EEEDF3</color>
+    <color name="on_surface">#1B1B1F</color>
+    <color name="inverse_primary">#A8C7FA</color>
+    <!-- 启动图标底色：与 logo（3.png）的纯黑背景一致 -->
+    <color name="ic_launcher_background">#000000</color>
+</resources>

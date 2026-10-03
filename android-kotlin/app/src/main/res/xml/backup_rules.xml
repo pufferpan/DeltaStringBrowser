@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 数据库(快照+收藏)随系统备份/迁移；应用启动时会按资产版本号自动重建快照并保留收藏。 -->
+<full-backup-content />

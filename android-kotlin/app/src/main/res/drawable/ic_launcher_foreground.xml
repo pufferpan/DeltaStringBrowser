@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 前台图标：圆角表格线稿（Material Symbols 风格的“数据表”意象），白色描边。 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M35,33 H73 A6,6 0 0 1 79,39 V69 A6,6 0 0 1 73,75 H35 A6,6 0 0 1 29,69 V39 A6,6 0 0 1 35,33 Z M29,51 H79 M29,63 H79"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+</vector>

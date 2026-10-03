@@ -1,0 +1,74 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <RootNamespace>DeltaStringBrowser</RootNamespace>
+    <AssemblyName>DeltaStringBrowser</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- 应用图标（exe 内嵌；同时作为 Assets\app.ico 复制到输出目录，供运行时设置窗口/任务栏图标） -->
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <UseWinUI>true</UseWinUI>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <!-- ================= Alpha 定时过期版（独立发布的版本） =================
+       编译 / 发布（自包含 .NET + WindowsAppSDK，免装运行时）：
+         dotnet publish -c Alpha -r win-x64 -p:SelfContained=true
+       该配置定义 ALPHA_EXPIRY，启用 Services/TimeGuard.cs：启动时向公网 NTP 服务器取时，
+       系统时间与 NTP 不一致 / 网络时间已过 2026-09-24 00:00（北京时间）/ 无法完成校时
+       一律只显示统一提示并退出。Release 正式版不含这些代码，行为与原先一致。 -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Alpha'">
+    <DefineConstants>$(DefineConstants);ALPHA_EXPIRY</DefineConstants>
+    <Version>1.0.0-alpha.20260924</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <InformationalVersion>1.0.0-alpha-expire-20260924</InformationalVersion>
+    <Product>三角洲行动 StringTables 归类浏览器 Alpha测试版</Product>
+    <AssemblyTitle>StringTables 归类浏览器 Alpha测试版（2026-09-24 过期）</AssemblyTitle>
+    <Company>河豚潘PufferPan</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260804001" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.9169" />
+    <Content Include="Assets\app.ico" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!--
+    android\ 是单独的 .NET-for-Android 试验工程（安卓端正式交付物是 Kotlin 原生版
+    E:\新建文件夹 (8)\DeltaStringBrowser-Android），它有自己的 csproj 和 obj\bin。
+    默认 glob 会把 android\**\*.cs 也吃进 Windows 工程，导致 CS0246/CS0579 一堆重复特性错误，
+    这里把它整个排除掉。
+  -->
+  <ItemGroup>
+    <Compile Remove="android\**" />
+    <Page Remove="android\**" />
+    <ApplicationDefinition Remove="android\**" />
+    <None Remove="android\**" />
+    <Content Remove="android\**" />
+    <EmbeddedResource Remove="android\**" />
+  </ItemGroup>
+
+  <!--
+    WinUI 3 的 dotnet publish 不会自动把 XAML 编译产物（*.xbf 与 应用名.pri）带进 publish 目录，
+    少了它们运行时会报 "Cannot locate resource from 'ms-appx:///MainWindow.xaml'"，
+    所以发布完成后直接从输出目录拷过去（Alpha 安装包必须包含这两个文件）。
+  -->
+  <Target Name="CopyXamlResourcesAfterPublish" AfterTargets="Publish">
+    <ItemGroup>
+      <_XamlResources Include="$(OutDir)*.xbf" />
+      <_XamlResources Include="$(OutDir)$(TargetName).pri" Condition="Exists('$(OutDir)$(TargetName).pri')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_XamlResources)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

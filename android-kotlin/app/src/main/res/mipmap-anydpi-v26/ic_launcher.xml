@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景：logo（3.png）的纯黑底 -->
+    <background android:drawable="@color/ic_launcher_background" />
+    <!-- 前景：3.png 抠出的图形（透明底、居中、留出遮罩安全区） -->
+    <foreground android:drawable="@mipmap/ic_launcher_foreground" />
+    <!-- 主题图标（Android 13+ 单色）：沿用原来的表格线稿剪影 -->
+    <monochrome android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>
